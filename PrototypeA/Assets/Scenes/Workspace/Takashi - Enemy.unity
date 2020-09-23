@@ -341,7 +341,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 256145674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -498,7 +498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &455671240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -663,7 +663,7 @@ GameObject:
   - component: {fileID: 1789307730}
   - component: {fileID: 1789307732}
   m_Layer: 0
-  m_Name: New Sprite
+  m_Name: Steering Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -745,10 +745,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60879e518bb8d9449ade91f219e56f21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxSpeed: 0.05
+  _maxSpeed: 0.03
   _maxForce: 1
   _mass: 10
   _closeRadius: 3
+  _flee: 1
   _farRadius: 4
   _fleeDistance: 6
-  _flee: 0
+  _seekWander: 0
+  _randomSeekMin: {x: -5.5, y: -4}
+  _randomSeekMax: {x: 5.5, y: 4}
+  _newRandomTime: 1.5
+  _wander: 1
+  _wanderCircleDistance: 1
+  _wanderCircleRadius: 0.5
+  _wanderAngleChangeLimit: 8
