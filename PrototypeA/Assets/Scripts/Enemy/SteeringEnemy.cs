@@ -6,6 +6,7 @@ public class SteeringEnemy : MonoBehaviour {
 	[SerializeField] [Min(0)] float _maxSpeed = 0;
 	[SerializeField] [Min(0)] float _maxForce = 0;
 	[SerializeField] [Min(0.01f)] float _mass = 1;
+	[SerializeField] bool _flee = false;
 	StackFSM _fsm;
 	Vector2 _velocity;
 
@@ -21,8 +22,15 @@ public class SteeringEnemy : MonoBehaviour {
 	void CloseState() {
 		Vector2 __mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		float __diff = (__mousePosition - (Vector2)transform.position).magnitude;
-		if (__diff > 1) {
-			_fsm.PushState(SeekState);
+		if (_flee) {
+			if (__diff < 1) {
+				_fsm.PushState(FleeState);
+			}
+		}
+		else {
+			if (__diff > 1) {
+				_fsm.PushState(SeekState);
+			}
 		}
 	}
 
@@ -39,6 +47,23 @@ public class SteeringEnemy : MonoBehaviour {
 
 		float __diff = (__mousePosition - (Vector2)transform.position).magnitude;
 		if (__diff < 0.1) {
+			_fsm.PopState();
+		}
+	}
+
+	void FleeState() {
+		Vector2 __mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		Vector2 __desiredVelocity = ((Vector2)transform.position - __mousePosition).normalized * _maxSpeed;
+
+		Vector2 __steering = __desiredVelocity - _velocity;
+		__steering = Vector2.ClampMagnitude(__steering, _maxForce);
+		__steering = __steering / _mass;
+
+		_velocity = Vector2.ClampMagnitude(_velocity + __steering, _maxSpeed);
+		transform.position = transform.position + (Vector3)_velocity;
+
+		float __diff = (__mousePosition - (Vector2)transform.position).magnitude;
+		if (__diff > 5) {
 			_fsm.PopState();
 		}
 	}
