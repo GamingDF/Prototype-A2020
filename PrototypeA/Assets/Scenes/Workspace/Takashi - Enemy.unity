@@ -748,4 +748,7 @@ MonoBehaviour:
   _maxSpeed: 0.05
   _maxForce: 1
   _mass: 10
-  _flee: 1
+  _closeRadius: 3
+  _farRadius: 4
+  _fleeDistance: 6
+  _flee: 0

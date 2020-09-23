@@ -6,6 +6,9 @@ public class SteeringEnemy : MonoBehaviour {
 	[SerializeField] [Min(0)] float _maxSpeed = 0;
 	[SerializeField] [Min(0)] float _maxForce = 0;
 	[SerializeField] [Min(0.01f)] float _mass = 1;
+	[SerializeField] [Min(0)] float _closeRadius = 0;
+	[SerializeField] [Min(0)] float _farRadius = 0;
+	[SerializeField] [Min(0)] float _fleeDistance = 0;
 	[SerializeField] bool _flee = false;
 	StackFSM _fsm;
 	Vector2 _velocity;
@@ -36,7 +39,14 @@ public class SteeringEnemy : MonoBehaviour {
 
 	void SeekState() {
 		Vector2 __mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		Vector2 __desiredVelocity = (__mousePosition - (Vector2)transform.position).normalized * _maxSpeed;
+		Vector2 __desiredVelocity = __mousePosition - (Vector2)transform.position;
+
+		if (__desiredVelocity.magnitude < _closeRadius) {
+			__desiredVelocity = __desiredVelocity.normalized * _maxSpeed * (__desiredVelocity.magnitude / _closeRadius);
+		}
+		else {
+			__desiredVelocity = __desiredVelocity.normalized * _maxSpeed;
+		}
 
 		Vector2 __steering = __desiredVelocity - _velocity;
 		__steering = Vector2.ClampMagnitude(__steering, _maxForce);
@@ -54,6 +64,14 @@ public class SteeringEnemy : MonoBehaviour {
 	void FleeState() {
 		Vector2 __mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		Vector2 __desiredVelocity = ((Vector2)transform.position - __mousePosition).normalized * _maxSpeed;
+		float __diff = (__mousePosition - (Vector2)transform.position).magnitude;
+
+		if (__diff > _farRadius) {
+			__desiredVelocity = __desiredVelocity.normalized * _maxSpeed * (1 - ((__diff - _farRadius) / (_fleeDistance - _farRadius)));
+		}
+		else {
+			__desiredVelocity = __desiredVelocity.normalized * _maxSpeed;
+		}
 
 		Vector2 __steering = __desiredVelocity - _velocity;
 		__steering = Vector2.ClampMagnitude(__steering, _maxForce);
@@ -62,8 +80,7 @@ public class SteeringEnemy : MonoBehaviour {
 		_velocity = Vector2.ClampMagnitude(_velocity + __steering, _maxSpeed);
 		transform.position = transform.position + (Vector3)_velocity;
 
-		float __diff = (__mousePosition - (Vector2)transform.position).magnitude;
-		if (__diff > 5) {
+		if (__diff > _fleeDistance) {
 			_fsm.PopState();
 		}
 	}
