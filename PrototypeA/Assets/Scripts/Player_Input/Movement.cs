@@ -6,24 +6,26 @@ using System;
 public class Movement : MonoBehaviour
 {
     
-    float _input_x = 0f;
-    float _input_y = 0f;
+    float __input_x = 0f;
+    float __input_y = 0f;
     public float speed = 5.5f;
-    bool _isWalking = false;
+    bool __isWalking = false;
     void Awake()
     {
-        _isWalking = false;
+        __isWalking = false;
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        _input_x = Input.GetAxisRaw("Horizontal");
-        _input_y = Input.GetAxisRaw("Vertical");
-        _isWalking = (_input_x != 0 || _input_y != 0);
+    void Update() {
+        __input_x = Input.GetKey("d") ? (Input.GetKey("a") ? 0 : 1) : (Input.GetKey("a") ? -1 : 0);
+        __input_y = Input.GetKey("w") ? (Input.GetKey("s") ? 0 : 1) : (Input.GetKey("s") ? -1 : 0);
+        __isWalking = (__input_x != 0 || __input_y != 0);
+    }
 
-        if(_isWalking){
-            var move = new Vector3(_input_x, _input_y, 0).normalized;
+    void FixedUpdate()
+    {
+        if(__isWalking){
+            var move = new Vector3(__input_x, __input_y, 0).normalized;
             transform.position += move * speed * Time.deltaTime;
         } 
     }
