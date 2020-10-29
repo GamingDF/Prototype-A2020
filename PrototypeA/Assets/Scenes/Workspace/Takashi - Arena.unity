@@ -895,6 +895,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca026adb2b962474480371d212f6fa16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  projectils: []
 --- !u!114 &127151593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4954,6 +4955,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1903181959227267380, guid: d7b869724fe05e5489abf2c90b1d3aed,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 1903181959227267385, guid: d7b869724fe05e5489abf2c90b1d3aed,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5018,6 +5024,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1903181959227267391, guid: d7b869724fe05e5489abf2c90b1d3aed,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7b869724fe05e5489abf2c90b1d3aed, type: 3}
