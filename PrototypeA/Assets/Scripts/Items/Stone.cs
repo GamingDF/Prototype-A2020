@@ -19,7 +19,6 @@ public class Stone : MonoBehaviour
     void Update()
     {
         rb.AddForce(new Vector2(-rb.velocity.x, -rb.velocity.y) * speed, ForceMode2D.Impulse);
-        Debug.Log("X: " + rb.velocity.x + " Y: " + rb.velocity.y);
         if (rb.velocity.x < __minRate && rb.velocity.x > -__minRate)
         {
             if (rb.velocity.y < __minRate && rb.velocity.y > -__minRate)
@@ -27,6 +26,26 @@ public class Stone : MonoBehaviour
                 rb.velocity = new Vector3(0, 0, 0);
                 GetComponent<Collider2D>().isTrigger = true;
             }
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.gameObject.tag == "Enemy" && GetComponent<Collider2D>().isTrigger == false)
+        {
+            rb.velocity = new Vector3(0, 0, 0);
+            GetComponent<Collider2D>().isTrigger = true;
+            Health enemyHealth = other.gameObject.GetComponent<Health>();
+            print(enemyHealth.GetHealth());
+            enemyHealth.DealDamage(25);
+            if (enemyHealth.GetHealth() == 0)
+            {
+                Destroy(other.gameObject);
+            }
+        }
+        else
+        {
+            GetComponent<Collider2D>().isTrigger = false;
         }
     }
 }
