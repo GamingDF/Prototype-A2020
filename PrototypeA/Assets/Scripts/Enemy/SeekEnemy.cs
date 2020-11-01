@@ -28,6 +28,8 @@ public class SeekEnemy : MonoBehaviour {
 	float _pathRefreshTimer = 0;
 
 	float _idleTimer = 0;
+	Health _health;
+
 
 	StackFSM _fsm;
 	Vector2 _velocity;
@@ -37,6 +39,8 @@ public class SeekEnemy : MonoBehaviour {
 		_fsm = new StackFSM();
 		_fsm.PushState(PathState);
 		_informState.text = "";
+		_health = GetComponent<Health>();
+		_health.healthUpdate += CheckIfDead;
 	}
 
 	void Update() {
@@ -177,5 +181,10 @@ public class SeekEnemy : MonoBehaviour {
 			other.gameObject.GetComponent<Health>().DealDamage(20);
 			_fsm.PushState(IdleState);
 		}
+	}
+
+	void CheckIfDead(int p_health){
+		if(p_health == 0)
+			Destroy(gameObject);
 	}
 }
