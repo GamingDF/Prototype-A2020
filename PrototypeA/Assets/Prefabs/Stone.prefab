@@ -28,8 +28,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9077526735140032071}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.52631205, w: 0.8502915}
+  m_LocalPosition: {x: -2.578722, y: 0.0844934, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
@@ -48,7 +48,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0.17
-  acceleration: 100
   triggerColor: {r: 0.6037736, g: 0.6037736, b: 0.6037736, a: 1}
 --- !u!114 &2955844656907755122
 MonoBehaviour:
@@ -62,7 +61,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e5bf30ab0815d7db14e4bae9d04fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilType: normalStone
+  itemType: projectile
+  originalPrefab: {fileID: 9077526735140032071}
 --- !u!212 &1315889114566204948
 SpriteRenderer:
   m_ObjectHideFlags: 0

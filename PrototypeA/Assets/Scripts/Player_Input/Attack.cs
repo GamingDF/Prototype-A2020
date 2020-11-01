@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour {
 	public Transform throwPoint;
-	public GameObject projectilePrefab;
+	
 
 	public float projectileForce = 10f;
 
 	int __projNumber;
-	List<string> __projectilList;
+	List<GameObject> __projectileList;
 
 	void Start() {
-		__projectilList = GameObject.Find("Player").GetComponent<Player>().projectils;
+		__projectileList = GameObject.Find("Player").GetComponent<Player>().projectiles;
 	}
 
 	void Update() {
 		if (Input.GetButtonDown("Fire1")) {
-			__projNumber = __projectilList.Count;
+			__projNumber = __projectileList.Count;
 			if (__projNumber > 0)
 				Shoot();
 		}
 	}
 	void Shoot() {
-		__projectilList.RemoveAt(0);
-		GameObject proj = Instantiate(projectilePrefab, throwPoint.position, throwPoint.rotation);
+		GameObject proj = Instantiate(__projectileList[0], throwPoint.position, throwPoint.rotation);
+		__projectileList.RemoveAt(0);
 		Rigidbody2D rb = proj.GetComponent<Rigidbody2D>();
 		rb.AddForce(throwPoint.up * projectileForce * rb.mass, ForceMode2D.Impulse);
 	}

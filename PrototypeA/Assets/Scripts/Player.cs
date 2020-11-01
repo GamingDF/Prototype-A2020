@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 	public static Transform instance;
-	public List<string> projectils;
+	public List<GameObject> projectiles;
+	public GameObject initialProjectile;
 
 	void Awake() {
 		if (instance == null) {
@@ -15,14 +16,14 @@ public class Player : MonoBehaviour {
 			Destroy(gameObject);
 		}
 
-		projectils = new List<string>();
-		projectils.Add("normalStone");
+		projectiles = new List<GameObject>();
+		projectiles.Add(initialProjectile);
 	}
 
 	private void OnTriggerStay2D(Collider2D collision) {
 		if (collision.CompareTag("Collectable")) {
-			string projectilType = collision.gameObject.GetComponent<Collectable>().projectilType;
-			projectils.Add(projectilType);
+			if(collision.gameObject.GetComponent<Collectable>().itemType == "projectile")
+				projectiles.Add(collision.gameObject.GetComponent<Collectable>().GetPrefab());
 			Destroy(collision.gameObject);
 		}
 	}
